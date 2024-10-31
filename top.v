@@ -11,6 +11,7 @@ output reg [3:0] an,
 wire div_clock_wire;
 
 
+
 wire [7:0] sw_input_data;
 assign sw_input_data = sw[15:8];
 
@@ -28,13 +29,33 @@ reg [7:0] A, B;  //signed 8 bit register for A and B
 reg [7:0] tmp;
 wire [7:0] adder_output;
 wire [7:0] sub_output;
-wire [7:0] twos_comp_output
+wire [7:0] twos_comp_output;
+
+wire[3:0] y_lower_four;
+assign y_lower_four = Y[3:0];
+
+wire[3:0] y_upper_four;
+assign y_upper_four = Y[7:4];
 
 clock_div div_clock(
     .clock(clk),
     .reset(btnC),
     .div_clock(div_clock_wire);
 )
+
+seven_seg_scanner scanner(
+    .div_clock(div_clock_wire),
+    .reset(btnC),
+    .anode(an)
+);
+
+seven_seg_decoder decoder(
+    .Y_upper_four(y_upper_four),
+    .Y_lower_four(y_lower_four),
+    .operation_selector(operation_select),
+    .anode(anode),
+    .segs(seg)
+);
 
 eight_bit_adder add(
     .A(A),
