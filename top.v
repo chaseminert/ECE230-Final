@@ -26,6 +26,10 @@ always @(posedge btnC | posedge reset)begin
     end else begin
         case(sw)
 
+        4'b0000: Y = //call full adder
+        4'b0001: Y = //call subtractor
+        4'b0010: Y = << 1; //shift left
+        4'b0011: Y = >> 1; //shift right
 
 
         endcase
