@@ -37,9 +37,3 @@ module eight_bit_adder (
     );
 
 endmodule
-
-
-
-
-
-endmodule
