@@ -2,10 +2,14 @@ module top (
 
 input [15:0] sw,  //operation select
 input btnC,   // button operation rising edge clock
+input clk,
 output [15:0] led,
-output reg [6:0] segs,
+output reg [6:0] seg,
 output reg [3:0] an,
 );
+
+wire div_clock_wire;
+
 
 wire [7:0] sw_input_data;
 assign sw_input_data = sw[15:8];
@@ -26,6 +30,12 @@ wire [7:0] adder_output;
 wire [7:0] sub_output;
 wire [7:0] twos_comp_output
 
+clock_div div_clock(
+    .clock(clk),
+    .reset(btnC),
+    .div_clock(div_clock_wire);
+)
+
 eight_bit_adder add(
     .A(A),
     .B(B),
@@ -44,7 +54,7 @@ twos_complement comp(
 );
 
 
-always @(posedge btnC | posedge reset)begin
+always @(posedge btnC or posedge reset)begin
     if(reset) begin
 
     A <= 8'b0;
