@@ -15,5 +15,5 @@ module counter
             count <= count + 1;
         end
     end
-    
+// fuck this class lol    
 endmodule
